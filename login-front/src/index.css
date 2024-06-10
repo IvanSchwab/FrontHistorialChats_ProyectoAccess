@@ -1,0 +1,83 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --input-background-color: #1f1f1f;
+  --input-text-color: #e0e0e0;
+  --button-background-color: #1e88e5;
+  --button-text-color: #ffffff;
+  --nav-background-color: #333;
+  --link-color: #bb86fc;
+  --error-background-color: #cf6679;
+  --error-text-color: #ffffff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  display: block;
+  color: var(--text-color);
+}
+
+.form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"] {
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 5px 0 10px 0;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  border: 1px solid #444;
+}
+
+input[type="button"],
+button {
+  background-color: var(--button-background-color);
+  padding: 10px;
+  border: 0;
+  min-width: 100px;
+  border-radius: 5px;
+  color: var(--button-text-color);
+}
+
+nav {
+  background-color: var(--nav-background-color);
+}
+
+nav ul {
+  margin: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  padding: 10px;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.dashboard {
+  width: 500px;
+  margin: auto;
+}
+
+.errorMessage {
+  background-color: var(--error-background-color);
+  color: var(--error-text-color);
+  padding: 10px;
+}
