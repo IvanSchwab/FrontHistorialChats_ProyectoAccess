@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const { jsonResponse } = require("../lib/jsonResponse");
+const User = require("../schema/user");
+const getUserInfo = require("../lib/getUserInfo")
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, password } = req.body;
 
-  if (!!!name || !!!password) {
+  if (!name || !password) {
     return res.status(400).json(
       jsonResponse(400, {
         error: "Campos requeridos incompletos",
@@ -12,15 +14,28 @@ router.post("/", (req, res) => {
     );
   }
 
-  //Autenticar usuario
-  const accessToken = "access_token";
-  const refreshToken = "refresh_token";
-  const user = {
-    id: "1",
-    name: "john doe",
-    username: "john_doe",
-  };
-  res.status(200).json(jsonResponse(200, { user, accessToken, refreshToken}));
+  const user = await User.findOne({ name });
+
+  if (user) {
+    const correctPassword = await user.comparePassword(password, user.password);
+    if (correctPassword) {
+      //Autenticar usuario
+      const accessToken = user.createAccessToken();
+      const refreshToken = await user.createRefreshToken();
+      res
+        .status(200)
+        .json(jsonResponse(200, { user: getUserInfo(user), accessToken, refreshToken }));
+    } else{
+      res.status(400, {
+        error: "El usuario o la contraseña son incorrectos",
+      });
+  
+    }
+  } else {
+    res.status(400, {
+      error: "Usuario no encontrado",
+    });
+  }
 });
 
 module.exports = router;

@@ -52,7 +52,7 @@ export default function SignUp() {
       <form className="form" onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
         {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-        <label>Name </label>
+        <label>Nombre </label>
         <input
           type="text"
           value={name}
@@ -66,7 +66,7 @@ export default function SignUp() {
           onChange={(e) => setMail(e.target.value)}
         />
 
-        <label>Username</label>
+        <label>Contraseña</label>
         <input
           type="password"
           value={password}

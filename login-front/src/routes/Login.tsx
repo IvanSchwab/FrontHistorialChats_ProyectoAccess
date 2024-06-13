@@ -32,10 +32,10 @@ export default function Login(){
             }),
           });
           if(response.ok){
-            console.log("Usuario creado")
+            console.log("Usuario encontrado")
             setErrorResponse("");
     
-            goTo("/")
+           // goTo("/")
           } else{
             console.log("Algo salió mal")
             const json = await  response.json() as AuthResponseError;
@@ -53,10 +53,10 @@ export default function Login(){
             <form className="form" onSubmit={handleSubmit}>
                 <h1>Login</h1>
                 {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-                <label>Name </label>
+                <label>Nombre </label>
                     <input type="text" value ={name} onChange={(e) => setName(e.target.value)}/>
                                 
-                    <label>Username</label>
+                    <label>Contraseña</label>
                     <input type="password" value ={password} onChange={(e) => setPassword(e.target.value)}/>
 
                     <button>Login</button>

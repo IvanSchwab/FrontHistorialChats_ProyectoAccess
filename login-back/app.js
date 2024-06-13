@@ -2,13 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-
 require("dotenv").config();
+const uri = "mongodb+srv://ivanschwab6:dZAmPwfJuPD2aAic@cluster0.23iejw9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const port = process.env.PORT || 3100;
 
 app.use(cors());
 app.use(express.json());
+
+async function main(){
+  await mongoose.connect(uri);
+  console.log("Conectado a MongoDB")
+}
+
+main().catch(console.error);
 
 app.use("/api/signup", require("./routes/signup"));
 app.use("/api/login", require("./routes/login"));
