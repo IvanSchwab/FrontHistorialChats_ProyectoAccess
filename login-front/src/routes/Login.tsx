@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthProvider";
 import DefaultLayout from "../layout/DefaultLayout";
 import {useState} from "react"
 import { API_URL } from "../auth/constants";
-import type { AuthResponseError } from "../types/types";
+import type {AuthResponse, AuthResponseError } from "../types/types";
 
 
 export default function Login(){
@@ -34,8 +34,13 @@ export default function Login(){
           if(response.ok){
             console.log("Usuario encontrado")
             setErrorResponse("");
-    
-           // goTo("/")
+            const json = (await response.json()) as AuthResponse;
+
+            if (json.body.accessToken && json.body.refreshToken){
+              auth.saveUser(json)
+            goTo("/dashboard")
+            }
+
           } else{
             console.log("Algo salió mal")
             const json = await  response.json() as AuthResponseError;

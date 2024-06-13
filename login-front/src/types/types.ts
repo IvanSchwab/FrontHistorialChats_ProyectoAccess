@@ -17,3 +17,11 @@ export interface User{
     mail: string;
     //no se guarda la password acá
 }
+
+export interface AccessTokenResponse{
+    statusCode: number;
+    body:{
+        accessToken: string;
+    },
+    error?: string;
+}

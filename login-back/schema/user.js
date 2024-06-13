@@ -4,9 +4,6 @@ const { generateAccessToken, generateRefreshToken } = require("../auth/generateT
 const getUserInfo = require("../lib/getUserInfo")
 const Token = require("../schema/token")
 
-
-
-
 const UserSchema = new Mongoose.Schema({
   id: { type: Object },
   name: { type: String, required: true, unique: true },
