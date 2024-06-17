@@ -53,20 +53,24 @@ export default function Login(){
       }
 
     return (
-        <DefaultLayout>
+      <DefaultLayout>
+  <div className="container">
+    <div className="image-box">
+      <img src="src/images/LogoAccess.png" alt="Login image" className="login-image" />
+    </div>
+    <div className="login-box">
+      <form className="form" onSubmit={handleSubmit}>
+        <h1>Acceder</h1>
+        {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
+        <label>Nombre</label>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <label>Contraseña</label>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button>Iniciar sesión</button>
+      </form>
+    </div>
+  </div>
+</DefaultLayout>
 
-            <form className="form" onSubmit={handleSubmit}>
-                <h1>Login</h1>
-                {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-                <label>Nombre </label>
-                    <input type="text" value ={name} onChange={(e) => setName(e.target.value)}/>
-                                
-                    <label>Contraseña</label>
-                    <input type="password" value ={password} onChange={(e) => setPassword(e.target.value)}/>
-
-                    <button>Login</button>
-            </form>
-
-        </DefaultLayout>
     )
 }

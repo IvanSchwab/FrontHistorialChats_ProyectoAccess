@@ -46,35 +46,27 @@ export default function SignUp() {
   if (auth.isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
-
+  
   return (
     <DefaultLayout>
+  <div className="container">
+    <div className="image-box">
+      <img src="src/images/LogoAccess.png" alt="Sign up image" className="signup-image" />
+    </div>
+    <div className="login-box">
       <form className="form" onSubmit={handleSubmit}>
-        <h1>Sign Up</h1>
+        <h1>Registrarse</h1>
         {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-        <label>Nombre </label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <label>Mail </label>
-        <input
-          type="text"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
-        />
-
+        <label>Nombre</label>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <label>Mail</label>
+        <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
         <label>Contraseña</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button>Create User</button>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button>Crear usuario</button>
       </form>
-    </DefaultLayout>
+    </div>
+  </div>
+</DefaultLayout>
   );
 }
