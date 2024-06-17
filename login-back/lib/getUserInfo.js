@@ -6,4 +6,4 @@ return {
 }
 }
 
-module.exports = getUserInfo;
+export default getUserInfo;

@@ -1,7 +1,9 @@
-const router = require("express").Router();
-const { jsonResponse } = require("../lib/jsonResponse");
-const User = require("../schema/user");
-const getUserInfo = require("../lib/getUserInfo")
+import express from "express";
+const router = express.Router();
+import { jsonResponse } from "../lib/jsonResponse.js";
+import User from "../schema/user.js";
+import getUserInfo from "../lib/getUserInfo.js";
+
 
 router.post("/", async (req, res) => {
   const { name, password } = req.body;
@@ -38,4 +40,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,7 @@
-const getTokenFromHeader = require("../auth/getTokenFromHeader");
-
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
+// const getTokenFromHeader = require("../auth/getTokenFromHeader");
+import getTokenFromHeader from "../auth/getTokenFromHeader";
 
 router.post("/", async (req, res) => {
   const refreshToken = getTokenFromHeader(req.headers);
