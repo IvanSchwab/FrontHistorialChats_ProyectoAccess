@@ -1,6 +1,8 @@
-const router = require("express").Router();
-const { jsonResponse } = require("../lib/jsonResponse");
-const User = require("../schema/user");
+import express from "express";
+import { jsonResponse } from "../lib/jsonResponse";
+import User from "../schema/user";
+
+const router = express.Router();
 
 
 router.post("/", async (req, res) => {
@@ -39,4 +41,4 @@ const newUser = new User({name, mail, password});
       return res.status(500).json(jsonResponse(500, { error: "Error del servidor" }));
 }
 });
-module.exports = router;
+export default router;

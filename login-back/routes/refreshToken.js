@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 // const getTokenFromHeader = require("../auth/getTokenFromHeader");
-import getTokenFromHeader from "../auth/getTokenFromHeader";
+import getTokenFromHeader from "../auth/getTokenFromHeader.js";
 
 router.post("/", async (req, res) => {
   const refreshToken = getTokenFromHeader(req.headers);
@@ -35,4 +35,4 @@ router.post("/", async (req, res) => {
   res.send("refresh token");
 });
 
-module.exports = router;
+export default router;

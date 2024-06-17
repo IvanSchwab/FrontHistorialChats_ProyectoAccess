@@ -1,4 +1,4 @@
-function getTokenFromHeader(header) {
+export function getTokenFromHeader(header) {
   if (header && header.authorization) {
     const parted = header.authorization.split("");
     if (parted.length === 2) {
