@@ -1,10 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const mongoose = require("mongoose");
-require("dotenv").config();
-const uri = "mongodb+srv://ivanschwab6:dZAmPwfJuPD2aAic@cluster0.23iejw9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+import express from "express";
+import routerMaster from "./routes/routerMaster.js";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
+const uri = process.env.DB_CONNECTION_STRING;
+
+const app = express();
 const port = process.env.PORT || 3100;
 
 app.use(cors());
@@ -18,16 +21,6 @@ async function main(){
 main().catch(console.error);
 
 app.use('/', routerMaster);
-// app.use("/api/signup", require("./routes/signup"));
-// app.use("/api/login", require("./routes/login"));
-// app.use("/api/user", require("./routes/user"));
-// app.use("/api/todos", require("./routes/todos"));
-// app.use("/api/refresh-token", require("./routes/refreshToken"));
-// app.use("/api/signout", require("./routes/signout"));
-
-// app.get("/", (req, res) => {
-//   res.send("Hello World");
-// });
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
