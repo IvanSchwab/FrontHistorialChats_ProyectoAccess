@@ -83,6 +83,7 @@ button {
   min-width: 100px;
   border-radius: 5px;
   color: var(--button-text-color);
+  margin-right: 0.8px;
 }
 
 nav {

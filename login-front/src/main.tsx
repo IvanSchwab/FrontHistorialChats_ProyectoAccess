@@ -8,6 +8,8 @@ import Dashboard from "./routes/Dashboard.tsx";
 import Login from "./routes/Login.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import { AuthProvider } from "./auth/AuthProvider.tsx";
+import { Auth0Provider } from '@auth0/auth0-react';
+import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from "./auth/constants";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +35,23 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const onRedirectCallback = (appState: any) => {
+  window.history.replaceState(
+    {},
+    document.title,
+    appState?.returnTo || window.location.pathname
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider>
+    <Auth0Provider
+      domain={AUTH0_DOMAIN}
+      clientId={AUTH0_CLIENT_ID}
+      authorizationParams={{ redirect_uri: window.location.origin }}
+      onRedirectCallback={onRedirectCallback}
+    >
       <RouterProvider router={router} />
-    </AuthProvider>
+    </Auth0Provider>
   </React.StrictMode>
 );
-
