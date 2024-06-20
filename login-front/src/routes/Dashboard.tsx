@@ -4,7 +4,6 @@ import axios from "axios";
 import "../Dashboard.css";
 
 interface Chat {
-  _id: string;
   chat_id: string;
   user_id: string;
   session_id: string;
@@ -13,9 +12,10 @@ interface Chat {
 }
 
 interface Message {
-  _id: string;
-  text: string;
-  sender: "me" | "other";
+  message_id: string;
+  content: string;
+  role: "human" | "ai";
+  date: string;
 }
 
 const ChatList: React.FC<{
@@ -26,7 +26,7 @@ const ChatList: React.FC<{
     <h2>Chats</h2>
     <ul>
       {chats.map((chat) => (
-        <li key={chat._id} onClick={() => onSelectChat(chat)}>
+        <li key={chat.chat_id} onClick={() => onSelectChat(chat)}>
           {chat.chat_id}
         </li>
       ))}
@@ -38,28 +38,30 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
   selectedChat,
 }) => {
   useEffect(() => {
-    console.log("selectedChat:", selectedChat);
+    console.log("Selected chat:", selectedChat);
   }, [selectedChat]);
+
+  if (!selectedChat) {
+    return <p>Please select a chat to view its messages.</p>;
+  }
 
   return (
     <div className="chat-window card">
-      {selectedChat ? (
-        <>
-          <div className="chat-name">{selectedChat.chat_id}</div>
-          <div className="messages">
-            {selectedChat.messages.map((message) => (
-              <div
-                key={message._id}
-                className={`message ${message.sender ? message.sender : ""}`}
-              >
-                {message.text}
+      <div className="chat-name">{selectedChat.chat_id}</div>
+      <div className="messages">
+        {selectedChat.messages.length > 0? (
+          selectedChat.messages
+          .filter(message => message!== null) // Filter out any null entries
+          .map((message) => (
+              <div key={message.message_id} className={`message ${message.role === 'ai'? 'ai' : 'human'}`}>
+                <strong>{message.content}</strong>
+                <small>{new Date(message.date).toLocaleString()}</small>
               </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <p>Selecciona un chat para empezar a chatear</p>
-      )}
+           ))
+        ) : (
+          <p>No messages yet.</p>
+        )}
+      </div>
     </div>
   );
 };
@@ -67,6 +69,7 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
 const Dashboard: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+  const [isConnected, setIsConnected] = useState<boolean>(false); // New state for connection status
 
   useEffect(() => {
     fetchChats();
@@ -77,8 +80,10 @@ const Dashboard: React.FC = () => {
       const response = await axios.get("http://localhost:3000/conversations");
       console.log("Datos de la API:", response.data);
       setChats(response.data);
+      setIsConnected(true);
     } catch (error) {
       console.error("Error fetching chats:", error);
+      setIsConnected(false);
     }
   };
 
@@ -100,6 +105,8 @@ const Dashboard: React.FC = () => {
           <ChatWindow selectedChat={selectedChat} />
         </div>
       </div>
+      {!isConnected && <p>Connection failed. Please check your network.</p>}
+      {isConnected && <p>Successfully connected!</p>}
     </div>
   );
 };
