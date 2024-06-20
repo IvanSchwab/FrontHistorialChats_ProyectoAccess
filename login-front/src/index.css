@@ -47,7 +47,8 @@ label {
   align-items: center;
   justify-content: center;
   width: 350px; 
-  height: 40%; 
+  height: 40%;
+  height: 60dvh;
 }
 
 .image-box {
@@ -113,4 +114,27 @@ a {
   background-color: var(--error-background-color);
   color: var(--error-text-color);
   padding: 10px;
+}
+
+.login-btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+.login-btn-group button{
+  background-color: #234D9D;
+  font-size: 15px;
+}
+
+.title, .title-r{
+  font-size: 48px;
+  margin: 0px 0px 20px 0px;
+  color: #234D9D;
+}
+.title-r{
+  font-size: 40px;
+}
+
+.input-group input{
+  border-radius: 4px;
 }

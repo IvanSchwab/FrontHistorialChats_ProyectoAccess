@@ -51,19 +51,27 @@ export default function SignUp() {
     <DefaultLayout>
   <div className="container">
     <div className="image-box">
-      <img src="src/images/LogoAccess.png" alt="Sign up image" className="signup-image" />
+      <img src="src/images/acces-logo-transparent-600x600.png" alt="Login image" className="login-image" />
     </div>
     <div className="login-box">
       <form className="form" onSubmit={handleSubmit}>
-        <h1>Registrarse</h1>
+        <h1 className='title-r'>Registrarse</h1>
         {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-        <label>Nombre</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <label>Mail</label>
-        <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
-        <label>Contraseña</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button>Crear usuario</button>
+        <div className='input-group'>
+          <label>Nombre</label>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </div>
+        <div className='input-group'>
+          <label>Mail</label>
+          <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
+        </div>
+        <div className='input-group'>
+          <label>Contraseña</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <div className='login-btn-group'>
+          <button>Crear usuario</button>
+        </div>
       </form>
     </div>
   </div>

@@ -55,18 +55,24 @@ export default function Login() {
     <DefaultLayout>
       <div className="container">
         <div className="image-box">
-          <img src="src/images/LogoAccess.png" alt="Login image" className="login-image" />
+          <img src="src/images/acces-logo-transparent-600x600.png" alt="Login image" className="login-image" />
         </div>
         <div className="login-box">
           <form className="form" onSubmit={handleSubmit}>
-            <h1>Acceder</h1>
+            <h1 className='title'>Acceder</h1>
             {!!errorResponse && <div className="errorMessage">{errorResponse}</div>}
-            <label>Nombre</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            <label>Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button>Iniciar sesión</button> 
-            <button onClick={() => loginWithRedirect()}>Iniciar con Outlook</button>
+            <div className='input-group'>
+              <label>Nombre</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div className='input-group'>
+              <label>Contraseña</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>  
+            <div className='login-btn-group'>
+              <button>Iniciar sesión</button> 
+              <button onClick={() => loginWithRedirect()}>Iniciar con Outlook</button>
+            </div>
           </form>
           {auth0Error && <div className="errorMessage">{auth0Error.message}</div>}
         </div>
