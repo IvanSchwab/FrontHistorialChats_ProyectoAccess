@@ -106,7 +106,6 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       {!isConnected && <p>Connection failed. Please check your network.</p>}
-      {isConnected && <p>Successfully connected!</p>}
     </div>
   );
 };

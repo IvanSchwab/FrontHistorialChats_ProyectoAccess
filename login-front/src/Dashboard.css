@@ -87,13 +87,13 @@
     word-break: break-all; 
   }
   
-  .message.me {
+  .message.human {
     background-color: #dcf8c6;
     align-self: flex-end; 
     text-align: right; 
   }
   
-  .message.other {
+  .message.ai {
     background-color: #eaeaea;
     align-self: flex-start; 
     text-align: left; 
