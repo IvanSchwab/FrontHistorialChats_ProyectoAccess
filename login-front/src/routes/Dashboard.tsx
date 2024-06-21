@@ -22,8 +22,8 @@ const ChatList: React.FC<{
   chats: Chat[];
   onSelectChat: (chat: Chat) => void;
 }> = ({ chats, onSelectChat }) => (
-  <div className="chat-list card">
-    <h2>Chats</h2>
+  <div className="card-list card">
+    <h2 className="title-chats">Chats</h2>
     <ul>
       {chats.map((chat) => (
         <li key={chat.chat_id} onClick={() => onSelectChat(chat)}>
@@ -42,34 +42,36 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
   }, [selectedChat]);
 
   if (!selectedChat) {
-    return <p>Please select a chat to view its messages.</p>;
+    return <div className="chat-window card empty-message" />;
   }
 
   return (
     <div className="chat-window card">
       <div className="chat-name">{selectedChat.chat_id}</div>
       <div className="messages">
-        {selectedChat.messages.length > 0? (
+        {selectedChat.messages.length > 0 ? (
           selectedChat.messages
-          .filter(message => message!== null) // Filter out any null entries
-          .map((message) => (
-              <div key={message.message_id} className={`message ${message.role === 'ai'? 'ai' : 'human'}`}>
+            .filter(message => message !== null) // Filter out any null entries
+            .map((message) => (
+              <div key={message.message_id} className={`message ${message.role === 'ai' ? 'ai' : 'human'}`}>
                 <strong>{message.content}</strong>
-                <small>{new Date(message.date).toLocaleString()}</small>
+                <small>{new Date(parseInt(message.date) * 1000).toLocaleString()}</small>
               </div>
-           ))
+            ))
         ) : (
-          <p>No messages yet.</p>
+          <p>Sin mensajes aún</p>
         )}
       </div>
     </div>
   );
 };
 
+
 const Dashboard: React.FC = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false); // New state for connection status
+  const [loading, setLoading] = useState<boolean>(true); // State to track loading state
 
   useEffect(() => {
     fetchChats();
@@ -84,6 +86,8 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Error fetching chats:", error);
       setIsConnected(false);
+    } finally {
+      setLoading(false); // Set loading to false after fetching data
     }
   };
 
@@ -91,10 +95,15 @@ const Dashboard: React.FC = () => {
     setSelectedChat(chat);
   };
 
+  if (loading) {
+    return(
+    <div className="loading-message">
+      <p>Cargando chats...</p>
+    </div>)
+  }
+
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
-      <LogoutButton />
 
       <div className="main-container">
         <div className="chat-list-container">
@@ -105,9 +114,17 @@ const Dashboard: React.FC = () => {
           <ChatWindow selectedChat={selectedChat} />
         </div>
       </div>
-      {!isConnected && <p>Connection failed. Please check your network.</p>}
+
+      <div className="logout-container">
+        <LogoutButton />
+      </div>
+
+      {!isConnected && <p>Fallo de conexión. Por favor, revisa tu red.</p>}
     </div>
-  );
+      
+);
+  
 };
+
 
 export default Dashboard;
