@@ -33,6 +33,7 @@ label {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .image-box,
@@ -41,7 +42,7 @@ label {
   border: 1px solid var(--box-border-color);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-right: 20px; 
   display: flex;
   align-items: center;
@@ -52,7 +53,8 @@ label {
 }
 
 .image-box {
-  margin-right: 20px;
+  background: linear-gradient(135deg, rgba(164, 225, 255, 0.1), rgba(243, 102, 255, 0));
+  border: none;
 }
 
 .login-image {
@@ -105,11 +107,6 @@ a {
   text-decoration: none;
 }
 
-.dashboard {
-  width: 500px;
-  margin: auto;
-}
-
 .errorMessage {
   background-color: var(--error-background-color);
   color: var(--error-text-color);
@@ -133,6 +130,17 @@ a {
 }
 .title-r{
   font-size: 40px;
+}
+
+.login-group{
+  display: flex;
+  width: 56%;
+  height: 72dvh;
+  justify-content: space-evenly;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: #fff;
+  border-radius: 10px;
 }
 
 .input-group input{
