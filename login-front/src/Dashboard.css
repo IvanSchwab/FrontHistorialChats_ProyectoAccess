@@ -48,17 +48,16 @@
   color: #333; 
 }
 
-.chat-window .chat-name {
+.sticky-header {
   position: sticky;
   top: 0;
-  text-align: center; 
-  border-radius: 10px;
   font-weight: 700;
-  background-color: #4a90e2;
   color: #fff;
-  padding: 15px; 
-  z-index: 10;
-  border-bottom: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #4a90e2;
+  z-index: 100; 
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 
@@ -152,4 +151,51 @@
 
 .empty-message:before {
   content: "Seleccione un Chat para comenzar";
+}
+
+.thumb-icon {
+  font-size: 1.5em;
+  margin: 0 5px;
+}
+.status-icon {
+  font-size: 0.8em;
+  margin-right: 5px;
+}
+
+.status-icon.open {
+  color: green;
+}
+
+.status-icon.closed {
+  color: red;
+}
+
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.status-label {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+.status-label.open {
+  background-color: green;
+  color: white;
+}
+
+.status-label.closed {
+  background-color: red;
+  color: white;
 }
