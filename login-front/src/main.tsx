@@ -45,6 +45,7 @@ const onRedirectCallback = (appState: any) => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <AuthProvider>
     <Auth0Provider
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
@@ -53,5 +54,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     >
       <RouterProvider router={router} />
     </Auth0Provider>
+    </AuthProvider>
   </React.StrictMode>
 );
