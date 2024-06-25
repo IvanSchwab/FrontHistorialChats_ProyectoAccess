@@ -156,8 +156,10 @@ a {
   background-color: #234D9D;
   font-size: 15px;
   position: absolute;
-  bottom: 8px;
-  right: 6px;
+  /* bottom: 8px; */
+  /* right: 6px; */
+  bottom: -54px;
+	right: -4px;
   border-radius: 15px;
   display: flex;
   align-items: center;

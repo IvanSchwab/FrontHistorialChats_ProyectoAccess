@@ -113,7 +113,8 @@
 }
 
 .chat-list-item:hover {
-  background-color: #d0e7fd;
+  /* background-color: #d0e7fd; */
+  background-color: #c6e1fa;
 }
 
 .messages {
@@ -328,4 +329,13 @@ g, path{
 }
 .feedback-container{
   margin-left: 8px;
+}
+.message-empty{
+  padding: 10px;
+  width: 80%;
+  justify-content: center;
+  align-self: center;
+}
+.selectedChat{
+  background: #9fcaf4;
 }

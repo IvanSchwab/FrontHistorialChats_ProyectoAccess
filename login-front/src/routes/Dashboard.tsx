@@ -29,10 +29,15 @@ const ChatList: React.FC<{
   onSelectChat: (chat: Chat) => void;
 }> = ({ chats, searchQuery, onSearchChange, onSelectChat }) => {
 
+  const changeChatIndicator = () =>{
+    document.querySelector('.selectedChat')?.classList.remove('selectedChat');
+    
+  }
+
   const getLastMessageDate = (messages: Message[]): string => {
     if (messages.length === 0) return "No messages";
     const lastMessage = messages[messages.length - 1];
-    return new Date(lastMessage.date).toLocaleString();
+    return new Date(parseInt(lastMessage.date) * 1000).toLocaleString().split(',')[0];
   };
 
   //this part is just to make the input appear and disappear
@@ -113,7 +118,10 @@ const ChatList: React.FC<{
           .map((chat, index) => (
             <li
               key={`${chat.chat_id}-${index}`}
-              onClick={() => onSelectChat(chat)}
+              onClick={() => {
+                changeChatIndicator();
+                onSelectChat(chat)
+              }}
               className="chat-list-item"
             >
               <div>{chat.chat_id}</div>
@@ -131,7 +139,7 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
   selectedChat,
 }) => {
   useEffect(() => {
-    console.log("Selected chat:", selectedChat);
+    // console.log("Selected chat:", selectedChat);
   }, [selectedChat]);
 
   if (!selectedChat) {
@@ -198,7 +206,7 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
               </div>
             ))
         ) : (
-          <div className="message">
+          <div className="message message-empty">
             <p>Sin mensajes aún</p>
           </div>
         )}
@@ -217,16 +225,9 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get("http://localhost:4040/conversations");
+        const response = await axios.get("http://localhost:8080/conversations");
         console.log("Datos de la API:", response.data);
-        if(typeof(response.data) == 'object'){
-          console.warn('objeto', response.data.data);
-          if(typeof(response.data.data) != 'undefined'){
-            setChats(response.data.data);
-          }else{ console.error('error in handleing data')}
-        }else{
-          setChats(response.data);
-        }
+        setChats(response.data);
         setIsConnected(true);
       } catch (error) {
         console.error("Error fetching chats:", error);
@@ -241,6 +242,7 @@ const Dashboard: React.FC = () => {
 
   const handleSelectChat = (chat: Chat) => {
     setSelectedChat(chat);
+    
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
