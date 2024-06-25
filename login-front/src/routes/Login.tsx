@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { API_URL } from '../auth/constants';
 import type { AuthResponse, AuthResponseError } from '../types/types';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [name, setName] = useState('');
@@ -52,7 +53,7 @@ export default function Login() {
   }
 
   return (
-    <DefaultLayout>
+    // <DefaultLayout>
       <div className="container">
         <div className="image-box">
           <img src="src/images/acces-logo-transparent-600x600.png" alt="Login image" className="login-image" />
@@ -74,9 +75,15 @@ export default function Login() {
               <button onClick={() => loginWithRedirect()}>Iniciar con Outlook</button>
             </div>
           </form>
+          <Link to="/signup">
+            <button className='btn-send2register'>
+              <p>Registrarse</p>
+              <img className='icon-arrow-w' src="src/images/inside-circle-arrow-25-white.png" alt="arrow white"/>
+              <img className='icon-arrow-b' src="src/images/inside-circle-arrow-25-blue.png" alt="arrow blue"/>
+          </button></Link>
           {auth0Error && <div className="errorMessage">{auth0Error.message}</div>}
         </div>
       </div>
-    </DefaultLayout>
+    // </DefaultLayout>
   );
 }

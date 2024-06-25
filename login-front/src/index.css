@@ -50,6 +50,7 @@ label {
   width: 350px; 
   height: 40%;
   height: 60dvh;
+  position: relative;
 }
 
 .image-box {
@@ -66,9 +67,8 @@ label {
   width: 75%; 
 }
 
-input[type="text"],
-input[type="password"] {
-  display: block;
+.input-group input[type="text"],
+.input-group input[type="password"] {
   padding: 10px;
   box-sizing: border-box;
   width: 100%;
@@ -122,6 +122,12 @@ a {
   background-color: #234D9D;
   font-size: 15px;
 }
+.login-btn-group button:hover {
+  color: #234d9d;
+  background: #fff;
+  border: 1px solid #234d9d;
+  padding: 9px;
+}
 
 .title, .title-r{
   font-size: 48px;
@@ -145,4 +151,36 @@ a {
 
 .input-group input{
   border-radius: 4px;
+}
+.btn-send2register{
+  background-color: #234D9D;
+  font-size: 15px;
+  position: absolute;
+  bottom: 8px;
+  right: 6px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+.btn-send2register p{
+  margin: 0px 6px 0px 0px;
+}
+.btn-send2register:hover{
+  color: #234D9D;
+  background-color: #fff;
+  border: 1px solid #234D9D;
+}
+.btn-send2register:hover .icon-arrow-b{
+  opacity: 1;
+}
+.btn-send2register:hover .icon-arrow-w{
+  opacity: 0;
+}
+.icon-arrow-w{
+  opacity: 1;
+}
+.icon-arrow-b{
+  opacity: 0;
+  position: absolute;
+  right: 6px;
 }

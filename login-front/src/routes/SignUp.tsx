@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import type { AuthResponseError } from "../types/types";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -48,7 +49,7 @@ export default function SignUp() {
   }
   
   return (
-    <DefaultLayout>
+    // <DefaultLayout>
   <div className="container">
     <div className="image-box">
       <img src="src/images/acces-logo-transparent-600x600.png" alt="Login image" className="login-image" />
@@ -73,8 +74,14 @@ export default function SignUp() {
           <button>Crear usuario</button>
         </div>
       </form>
+      <Link to="/">
+            <button className='btn-send2register'>
+              <p>Ingresar</p>
+              <img className='icon-arrow-w' src="src/images/inside-circle-arrow-25-white.png" alt="arrow white"/>
+              <img className='icon-arrow-b' src="src/images/inside-circle-arrow-25-blue.png" alt="arrow blue"/>
+          </button></Link>
     </div>
   </div>
-</DefaultLayout>
+// </DefaultLayout>
   );
 }
