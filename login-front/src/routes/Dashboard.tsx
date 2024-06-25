@@ -18,7 +18,7 @@ interface Message {
   content: string;
   role: "human" | "ai";
   date: string;
-  feedback?: "Positive" | "Negative" | "None";
+  feedback?: "Positiva" | "Negativa" | "None";
 }
 
 const ChatList: React.FC<{
@@ -26,23 +26,33 @@ const ChatList: React.FC<{
   searchQuery: string;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectChat: (chat: Chat) => void;
-}> = ({ chats, onSelectChat }) => (
+}> = ({ chats, searchQuery, onSearchChange, onSelectChat }) => (
   <>
     <div className="chats-header">
       <h2 className="title-chats">Chats</h2>
+      <input
+        type="text"
+        placeholder="Buscar por ID..."
+        value={searchQuery}
+        onChange={onSearchChange}
+      />
     </div>
     <div className="chat-list">
       <ul>
-        {chats.map((chat, index) => (
-          <li
-            key={`${chat.chat_id}-${index}`}
-            onClick={() => onSelectChat(chat)}
-            className="chat-list-item"
-          >
-            <div>{chat.chat_id}</div>
-            <small className={`tag-${chat.status}`}>{chat.status}</small>
-          </li>
-        ))}
+        {chats
+          .filter((chat) =>
+            chat.chat_id.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((chat, index) => (
+            <li
+              key={`${chat.chat_id}-${index}`}
+              onClick={() => onSelectChat(chat)}
+              className="chat-list-item"
+            >
+              <div>{chat.chat_id}</div>
+              <small className={`tag-${chat.status}`}>{chat.status}</small>
+            </li>
+          ))}
       </ul>
     </div>
   </>
@@ -113,10 +123,10 @@ const ChatWindow: React.FC<{ selectedChat: Chat | null }> = ({
                 </div>
                 {message.role === "ai" && (
                   <div className="feedback-container">
-                    {message.feedback === "Positive" && (
+                    {message.feedback === "Positiva" && (
                       <ThumbUpIcon color="primary" />
                     )}
-                    {message.feedback === "Negative" && (
+                    {message.feedback === "Negativa" && (
                       <ThumbDownIcon color="error" />
                     )}
                   </div>
@@ -145,8 +155,6 @@ const Dashboard: React.FC = () => {
       try {
         const response = await axios.get("http://localhost:3000/conversations");
         console.log("Datos de la API:", response.data);
-        const chatIds = response.data.map((chat: Chat) => chat.chat_id);
-        console.log("Chat IDs:", chatIds);
         setChats(response.data);
         setIsConnected(true);
       } catch (error) {
