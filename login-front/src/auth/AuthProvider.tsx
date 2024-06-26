@@ -6,6 +6,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+// Contexto de autenticación para manejar el estado de autenticación y las funciones relacionadas
 const AuthContext = createContext({
   isAuthenticated: false,
   getAccessToken: () => {},
@@ -14,13 +15,14 @@ const AuthContext = createContext({
 });
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  // Estado local para almacenar el estado de autenticación, tokens y datos de usuario
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string>("");
   const [user, setUser] = useState<User>();
-  //const [refreshToken, setRefreshToken] = useState<string>("");
 
   useEffect(() => {}, []);
 
+  // Función para solicitar un nuevo token de acceso usando un token de actualización
   async function requestNewAccessToken(refreshToken: string) {
     try {
       const response = await fetch(`${API_URL}/refreshToken`, {
@@ -45,6 +47,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  // Función para obtener la información del usuario usando el token de acceso
   async function getUserInfo(accessToken: string) {
     try {
       const response = await fetch(`${API_URL}/user`, {
@@ -69,6 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  // Función para verificar el estado de autenticación y renovar el token si es necesario
   async function cheackAuth() {
     if (accessToken) {
       //Usuario ya autenticado
@@ -87,6 +91,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  // Función para guardar la información de sesión en el almacenamiento local
   function saveSessionInfo(
     userInfo: User,
     accessToken: string,

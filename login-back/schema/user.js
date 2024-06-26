@@ -1,8 +1,11 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import { generateAccessToken, generateRefreshToken } from '../auth/generateTokens.js';
-import getUserInfo from '../lib/getUserInfo.js';
-import Token from '../schema/token.js';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../auth/generateTokens.js";
+import getUserInfo from "../lib/getUserInfo.js";
+import Token from "../schema/token.js";
 
 const UserSchema = new mongoose.Schema({
   id: { type: Object },
@@ -10,9 +13,9 @@ const UserSchema = new mongoose.Schema({
   mail: { type: String, required: true },
   password: { type: String, required: true },
 });
-
-UserSchema.pre('save', function (next) {
-  if (this.isModified('password') || this.isNew) {
+// Middleware para encriptar la contraseña (bcrypt)
+UserSchema.pre("save", function (next) {
+  if (this.isModified("password") || this.isNew) {
     const document = this;
 
     bcrypt.hash(document.password, 10, (err, hash) => {
@@ -28,21 +31,25 @@ UserSchema.pre('save', function (next) {
   }
 });
 
+// Método para verificar si ya existe un usuario con el mismo nombre
 UserSchema.methods.nameExist = async function (name) {
-  const result = await mongoose.model('User').find({ name }); 
+  const result = await mongoose.model("User").find({ name });
 
   return result.length > 0;
 };
 
+// Método para comparar contraseñas encriptadas
 UserSchema.methods.comparePassword = async function (password, hash) {
   const same = await bcrypt.compare(password, hash);
   return same;
 };
 
+// Método para generar un token de acceso basado en la información del usuario
 UserSchema.methods.createAccessToken = function () {
   return generateAccessToken(getUserInfo(this));
 };
 
+// Método para generar un token de actualización y guardarlo en la base de datos
 UserSchema.methods.createRefreshToken = async function () {
   const refreshToken = generateRefreshToken(getUserInfo(this));
   try {
@@ -54,6 +61,7 @@ UserSchema.methods.createRefreshToken = async function () {
   }
 };
 
-const User = mongoose.model('User', UserSchema);
+// Creación del modelo 'User' basado en el esquema definido
+const User = mongoose.model("User", UserSchema);
 
 export default User;

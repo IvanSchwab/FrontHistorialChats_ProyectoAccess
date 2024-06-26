@@ -8,15 +8,6 @@ import refreshToken from '../routes/refreshToken.js';
 
 const routerMaster = Router()  
 
-// import 
-
-// app.use("/api/todos", require("./routes/todos"));
-// app.use("/api/signup", require("./routes/signup"));
-// app.use("/api/login", require("./routes/login"));
-// app.use("/api/user", require("./routes/user"));
-// app.use("/api/refresh-token", require("./routes/refreshToken"));
-// app.use("/api/signout", require("./routes/signout"));
-
 routerMaster.use("/api/allChats", allChatRoutes);
 routerMaster.use("/api/signup", signupRoutes);
 routerMaster.use("/api/login", loginRoutes);

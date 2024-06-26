@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUp from "./routes/SignUp.tsx";
@@ -8,9 +7,10 @@ import Dashboard from "./routes/Dashboard.tsx";
 import Login from "./routes/Login.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import { AuthProvider } from "./auth/AuthProvider.tsx";
-import { Auth0Provider } from '@auth0/auth0-react';
+import { Auth0Provider } from "@auth0/auth0-react";
 import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from "./auth/constants";
 
+// Creación del enrutador
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,11 +23,11 @@ const router = createBrowserRouter([
     errorElement: <div>Error</div>,
   },
   {
-    path: "/",
+    path: "/", // Ruta protegida que muestra el componente ProtectedRoute, que renderiza el Dashboard si el usuario está autenticado
     element: <ProtectedRoute />,
     children: [
       {
-        path: "/dashboard",
+        path: "/dashboard", // Ruta hija de la ruta protegida, muestra el componente Dashboard
         element: <Dashboard />,
       },
     ],
@@ -43,17 +43,17 @@ const onRedirectCallback = (appState: any) => {
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-    <Auth0Provider
-      domain={AUTH0_DOMAIN}
-      clientId={AUTH0_CLIENT_ID}
-      authorizationParams={{ redirect_uri: window.location.origin }}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <RouterProvider router={router} />
-    </Auth0Provider>
+      <Auth0Provider
+        domain={AUTH0_DOMAIN}
+        clientId={AUTH0_CLIENT_ID}
+        authorizationParams={{ redirect_uri: window.location.origin }}
+        onRedirectCallback={onRedirectCallback}
+      >
+        <RouterProvider router={router} />
+      </Auth0Provider>
     </AuthProvider>
   </React.StrictMode>
 );

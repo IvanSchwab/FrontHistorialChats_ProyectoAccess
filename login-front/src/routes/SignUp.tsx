@@ -1,9 +1,8 @@
-import DefaultLayout from "../layout/DefaultLayout";
+import type { AuthResponseError } from "../types/types";
+import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../auth/constants";
 import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
-import type { AuthResponseError } from "../types/types";
 import { Link } from "react-router-dom";
 
 export default function SignUp() {
@@ -28,60 +27,85 @@ export default function SignUp() {
           password,
         }),
       });
-      if(response.ok){
-        console.log("Usuario creado")
+      if (response.ok) {
+        console.log("Usuario creado");
         setErrorResponse("");
 
-        goTo("/")
-      } else{
-        console.log("Algo salió mal")
-        const json = await  response.json() as AuthResponseError;
+        goTo("/");
+      } else {
+        console.log("Algo salió mal");
+        const json = (await response.json()) as AuthResponseError;
         setErrorResponse(json.body.error);
         return;
       }
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   }
 
   if (auth.isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
-  
+
   return (
-    // <DefaultLayout>
-  <div className="container">
-    <div className="image-box">
-      <img src="src/images/acces-logo-transparent-600x600.png" alt="Login image" className="login-image" />
+    <div className="container">
+      <div className="image-box">
+        <img
+          src="src/images/acces-logo-transparent-600x600.png"
+          alt="Login image"
+          className="login-image"
+        />
+      </div>
+      <div className="login-box">
+        <form className="form" onSubmit={handleSubmit}>
+          <h1 className="title-r">Registrarse</h1>
+          {!!errorResponse && (
+            <div className="errorMessage"> {errorResponse}</div>
+          )}
+          <div className="input-group">
+            <label>Nombre</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <label>Mail</label>
+            <input
+              type="text"
+              value={mail}
+              onChange={(e) => setMail(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="login-btn-group">
+            <button>Crear usuario</button>
+          </div>
+        </form>
+        <Link to="/">
+          <button className="btn-send2register">
+            <p>Ingresar</p>
+            <img
+              className="icon-arrow-w"
+              src="src/images/inside-circle-arrow-25-white.png"
+              alt="arrow white"
+            />
+            <img
+              className="icon-arrow-b"
+              src="src/images/inside-circle-arrow-25-blue.png"
+              alt="arrow blue"
+            />
+          </button>
+        </Link>
+      </div>
     </div>
-    <div className="login-box">
-      <form className="form" onSubmit={handleSubmit}>
-        <h1 className='title-r'>Registrarse</h1>
-        {!!errorResponse && <div className="errorMessage"> {errorResponse}</div>}
-        <div className='input-group'>
-          <label>Nombre</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div className='input-group'>
-          <label>Mail</label>
-          <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
-        </div>
-        <div className='input-group'>
-          <label>Contraseña</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <div className='login-btn-group'>
-          <button>Crear usuario</button>
-        </div>
-      </form>
-      <Link to="/">
-            <button className='btn-send2register'>
-              <p>Ingresar</p>
-              <img className='icon-arrow-w' src="src/images/inside-circle-arrow-25-white.png" alt="arrow white"/>
-              <img className='icon-arrow-b' src="src/images/inside-circle-arrow-25-blue.png" alt="arrow blue"/>
-          </button></Link>
-    </div>
-  </div>
-// </DefaultLayout>
   );
 }

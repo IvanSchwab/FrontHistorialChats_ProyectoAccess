@@ -8,13 +8,13 @@ dotenv.config();
 const uri = process.env.DB_CONNECTION_STRING;
 
 const app = express();
-const port = process.env.PORT || 3100;
+const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 
 async function main(){
-  await mongoose.connect(uri);
+  await mongoose.connect(uri); // Conexión a la base de datos MongoDB
   console.log("Conectado a MongoDB")
 }
 
